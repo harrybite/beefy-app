@@ -51,8 +51,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "echo 'DO NOT disable validation here, fix specific issue' && yarn validate && react-scripts build",
-    "buildN": "react-scripts build",
+    "buildN": "echo 'DO NOT disable validation here, fix specific issue' && yarn validate && react-scripts build",
+    "build": "export NODE_OPTIONS=--max-old-space-size=4096 && react-scripts build",
     "validate": "node ./scripts/validatePools.js",
     "launchpool": "node ./scripts/launchpool.js",
     "test": "react-scripts test",

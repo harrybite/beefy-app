@@ -75,8 +75,8 @@ export default function App({ children }) {
                   connected={connected}
                   connectWallet={connectWalletCallback}
                   disconnectWallet={disconnectWalletCallback}
-                  isNightMode={isNightMode}
-                  setNightMode={() => setNightMode(!isNightMode)}
+                  isNightMode={true}
+                  setNightMode={() => setNightMode(true)}
                 />
               }
               isNightMode={isNightMode}

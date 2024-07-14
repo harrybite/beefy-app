@@ -5,16 +5,16 @@ const useIsNightMode = () => {
   const light = 'light';
   const dark = 'dark';
   let theme = dark;
-  if (localStorage) {
-    try {
-      theme = localStorage.getItem(key);
-    } catch (e) {}
-  }
-  const [isNightMode, setNightMode] = useState(theme === dark);
+  // if (localStorage) {
+  //   try {
+  //     theme = localStorage.getItem(key);
+  //   } catch (e) {}
+  // }
+  const [isNightMode, setNightMode] = useState(true);
 
   useEffect(() => {
     try {
-      localStorage.setItem(key, isNightMode ? dark : light);
+      // localStorage.setItem(key, isNightMode ? dark : light);
     } catch (e) {}
   }, [isNightMode]);
 

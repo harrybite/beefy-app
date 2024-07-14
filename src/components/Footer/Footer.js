@@ -13,8 +13,8 @@ const Footer = () => {
   return (
     <div className={classes.root}>
       <div className={classes.column}>
-        <div className={classes.title}>beefy.finance</div>
-        <a
+        <div className={classes.title}>babygrok.ai</div>
+        {/* <a
           href="https://docs.beefy.finance"
           target="_blank"
           rel="noopener noreferrer"
@@ -22,9 +22,9 @@ const Footer = () => {
         >
           <i className={`fas fa-book ${classes.linkIcon}`} />
           <span>{t('docs')}</span>
-        </a>
+        </a> */}
 
-        <a
+        {/* <a
           href="https://blog.beefy.finance/articles"
           target="_blank"
           rel="noopener noreferrer"
@@ -32,9 +32,9 @@ const Footer = () => {
         >
           <i className={`fas fa-file-alt ${classes.linkIcon}`} />
           <span>{t('blog')}</span>
-        </a>
+        </a> */}
 
-        <a
+        {/* <a
           href="https://forum.beefy.finance/"
           target="_blank"
           rel="noopener noreferrer"
@@ -42,8 +42,8 @@ const Footer = () => {
         >
           <i className={`fas fa-comments ${classes.linkIcon}`} />
           <span>{t('forum')}</span>
-        </a>
-
+        </a> */}
+        {/* 
         <a
           href="https://github.com/beefyfinance"
           target="_blank"
@@ -52,10 +52,10 @@ const Footer = () => {
         >
           <i className={`fab fa-github ${classes.linkIcon}`} />
           <span>{t('source')}</span>
-        </a>
+        </a> */}
       </div>
 
-      <div className={classes.column}>
+      {/* <div className={classes.column}>
         <div className={classes.title}>{t('products')}</div>
         <a
           href="https://gov.beefy.finance"
@@ -86,7 +86,7 @@ const Footer = () => {
           <i className={`fas fa-hand-holding-usd ${classes.linkIcon}`} />
           <span>{t('app')}</span>
         </a>
-      </div>
+      </div> */}
 
       <div className={classes.column}>
         <div className={classes.title}>{t('socials')}</div>
