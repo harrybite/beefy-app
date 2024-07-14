@@ -80,6 +80,8 @@ const PoolSummary = ({
     [toggleCard]
   );
 
+  console.log('Pools', pool);
+
   return (
     <AccordionSummary
       className={
@@ -137,7 +139,11 @@ const PoolSummary = ({
         />
         <Grid item xs={4} className={`${classes.item} ${classes.itemStats}`}>
           <LabeledStat
-            value={formatTvl(pool.tvl, pool.oraclePrice)}
+            value={
+              isNaN(pool.tvl)
+                ? formatTvl(0, pool.oraclePrice)
+                : formatTvl(pool.tvl, pool.oraclePrice)
+            }
             label={t('Vault-TVL')}
             isLoading={!fetchVaultsDataDone}
             className={classes.itemInner}

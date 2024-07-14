@@ -91,7 +91,7 @@ const Footer = () => {
       <div className={classes.column}>
         <div className={classes.title}>{t('socials')}</div>
         <a
-          href="https://twitter.com/beefyfinance"
+          href="https://x.com/GrokCat_bsc"
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
@@ -101,7 +101,7 @@ const Footer = () => {
           <span>twitter</span>
         </a>
         <a
-          href="https://t.me/beefyfinance"
+          href="https://t.me/babygrok"
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
@@ -111,13 +111,13 @@ const Footer = () => {
           <span>telegram</span>
         </a>
         <a
-          href="https://discord.gg/yq8wfHd"
+          href="https://www.facebook.com/BabyGrok"
           target="_blank"
           rel="noopener noreferrer"
           className={classes.link}
         >
-          <i className={`fab fa-discord ${classes.linkIcon}`} />
-          <span>discord</span>
+          <i className={`fab fa-facebook ${classes.linkIcon}`} />
+          <span>facebook</span>
         </a>
       </div>
     </div>
