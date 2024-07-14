@@ -4,7 +4,7 @@ const useIsNightMode = () => {
   const key = 'theme';
   const light = 'light';
   const dark = 'dark';
-  let theme = light;
+  let theme = dark;
   if (localStorage) {
     try {
       theme = localStorage.getItem(key);

@@ -50,11 +50,11 @@ const Header = ({ links, isNightMode, setNightMode }) => {
             <Hidden xsDown>
               <img
                 alt="BIFI"
-                src={require(`images/BIFI-logo.svg`)}
+                src={require(`images/baby.png`)}
                 height={'40px'}
                 className={classes.logo}
               />
-              beefy.finance
+              babygrok.ai
             </Hidden>
             <Hidden smUp>
               <img
@@ -67,7 +67,7 @@ const Header = ({ links, isNightMode, setNightMode }) => {
           </Button>
         </Link>
 
-        <div className={classes.middleNav}>
+        {/* <div className={classes.middleNav}>
           <Hidden smDown>
             {renderLink('vote', t('vote'), 'vote-yea', classes)}
             {renderLink('dashboard', t('stats'), 'chart-bar', classes)}
@@ -82,12 +82,12 @@ const Header = ({ links, isNightMode, setNightMode }) => {
           <Link className={classes.btnBoost} to={`/${chain}/stake`}>
             <img alt="Boost" src={require('images/stake/boost.svg')} />
           </Link>
-        </div>
+        </div> */}
 
         <Hidden smDown implementation="css">
           <div className={classes.collapse}>{links}</div>
         </Hidden>
-        <Hidden mdUp>
+        {/* <Hidden mdUp>
           <IconButton
             className={classes.iconButton}
             aria-label="open drawer"
@@ -95,10 +95,10 @@ const Header = ({ links, isNightMode, setNightMode }) => {
           >
             <Menu />
           </IconButton>
-        </Hidden>
+        </Hidden> */}
       </Toolbar>
 
-      <Hidden mdUp implementation="js">
+      {/* <Hidden mdUp implementation="js">
         <Drawer
           variant="temporary"
           anchor={'right'}
@@ -133,7 +133,7 @@ const Header = ({ links, isNightMode, setNightMode }) => {
             </IconButton>
           </div>
         </Drawer>
-      </Hidden>
+      </Hidden> */}
     </AppBar>
   );
 };

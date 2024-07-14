@@ -29,18 +29,22 @@ const VisiblePools = ({
   const classes = useStyles();
   const { t } = useTranslation();
 
+  // console.log("Pools ", pools)
+  // console.log("tokens ", tokens)
+
   const { filteredPools, toggleFilter, filters } = useFilteredPools(pools, tokens);
   const { poolsByPlatform, platform, setPlatform } = usePoolsByPlatform(filteredPools);
   const { poolsByVaultType, vaultType, setVaultType } = usePoolsByVaultType(poolsByPlatform);
   const { poolsByAsset, asset, setAsset } = usePoolsByAsset(poolsByVaultType);
   const { sortedPools, order, setOrder } = useSortedPools(poolsByAsset, apys, tokens);
   const { visiblePools, fetchVisiblePools } = useVisiblePools(sortedPools, 10);
+  console.log('visiblePools ', visiblePools);
 
   useLaunchpoolUpdates();
 
   return (
     <>
-      <Filters
+      {/* <Filters
         toggleFilter={toggleFilter}
         filters={filters}
         platform={platform}
@@ -51,7 +55,7 @@ const VisiblePools = ({
         setVaultType={setVaultType}
         setAsset={setAsset}
         setOrder={setOrder}
-      />
+      /> */}
       <div className={classes.scroller}>
         <InfiniteScroll dataLength={visiblePools.length} hasMore={true} next={fetchVisiblePools}>
           {visiblePools.map((pool, index) => (

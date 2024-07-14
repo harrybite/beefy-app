@@ -69,6 +69,8 @@ export default function Pools() {
 
   const activePoolCount = pools.filter(pool => pool.status === 'active').length;
 
+  console.log('TVL ', fetchVaultsDataDone, poolsTvl);
+
   return (
     <Grid container className={classes.container}>
       <Grid item xs={6}>

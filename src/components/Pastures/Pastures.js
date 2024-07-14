@@ -21,8 +21,8 @@ const Pastures = () => {
       <div className={classes.pastureRight} />
       <div className={classes.pastureCenterBg} />
       <div className={classes.pastureCenterFg} />
-      {cows &&
-        cows.map((_, index) => <Cow key={`cow${index}`} total={cows.length} index={index} />)}
+      {/* {cows &&
+        cows.map((_, index) => <Cow key={`cow${index}`} total={cows.length} index={index} />)} */}
     </div>
   );
 };
