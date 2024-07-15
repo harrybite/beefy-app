@@ -59,7 +59,7 @@ const Header = ({ links, isNightMode, setNightMode }) => {
             <Hidden smUp>
               <img
                 alt="BIFI"
-                src={require(`images/BIFI-logo.svg`)}
+                src={require(`images/baby.png`)}
                 height={'35px'}
                 className={classes.logo}
               />

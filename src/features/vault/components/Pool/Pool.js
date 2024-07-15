@@ -28,7 +28,6 @@ const Pool = ({
   const classes = useStyles();
 
   // console.log('Tokens ', tokens);
-  // console.log('pool ', pool);
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = useCallback(() => setIsOpen(!isOpen), [isOpen]);
