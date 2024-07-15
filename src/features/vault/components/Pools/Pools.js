@@ -69,6 +69,8 @@ export default function Pools() {
 
   const activePoolCount = pools.filter(pool => pool.status === 'active').length;
 
+  console.log('Pools', pools);
+
   console.log('TVL ', fetchVaultsDataDone, poolsTvl);
 
   return (
@@ -86,7 +88,7 @@ export default function Pools() {
         <div className={classes.tvl}>
           <span className={classes.title}>
             TVL{' '}
-            {fetchVaultsDataDone && poolsTvl > 0 ? (
+            {fetchVaultsDataDone ? (
               formatGlobalTvl(poolsTvl)
             ) : (
               <TVLLoader className={classes.titleLoader} />

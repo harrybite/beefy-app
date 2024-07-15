@@ -12,6 +12,7 @@ const priceCache = {
 };
 
 function getCachedPrice(id) {
+  console.log('Cache price ', priceCache.cache.get(id));
   return priceCache.cache.get(id);
 }
 

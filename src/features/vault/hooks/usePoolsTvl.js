@@ -9,7 +9,7 @@ const usePoolsTvl = pools => {
     let globalTvl = 0;
 
     pools.filter(isUniqueEarnContract).forEach(({ tvl, oraclePrice }) => {
-      globalTvl += tvl * oraclePrice;
+      globalTvl += tvl;
     });
 
     setPoolsTvl(globalTvl);

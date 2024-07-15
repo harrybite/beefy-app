@@ -13,7 +13,12 @@ const Footer = () => {
   return (
     <div className={classes.root}>
       <div className={classes.column}>
-        <div className={classes.title}>babygrok.ai</div>
+        <div className={classes.title}>
+          {' '}
+          <p>
+            &copy; <span id="2024">2024</span> babygrok.ai{' '}
+          </p>
+        </div>
         {/* <a
           href="https://docs.beefy.finance"
           target="_blank"

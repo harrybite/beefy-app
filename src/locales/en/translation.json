@@ -1,6 +1,6 @@
 {
   "App-Meta-Description": "The Multichain Yield Optimizer",
-  "Disclaimer": "Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.",
+  "Disclaimer": "Disclaimer: Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.",
   "Network-UnknownError": "An unknown error has occurred.",
   "Network-ConnectionRequired": "Wallet connection to {{network}} required.",
   "Network-Supports": "This app supports {{network}}.",
@@ -69,7 +69,7 @@
   "Vault-GeneralWarningTitle": "Please DYOR before depositing.",
   "Vault-Staked": "Staked",
   "Vault-Description": "Uses: {{vault}}",
-  "Vault-Network": "Select Network",
+  "Vault-Network": "Active Network",
   "Vault-Experimental": "Experimental",
   "Vault-Loading": "Loading Vault...",
   "Vault-NotFound": "Vault {{vaultId}} not found",
@@ -153,7 +153,7 @@
   "Wrap-BNB": "Wrap BNB",
   "Boost": "Boost",
   "Experimental": "Experimental",
-  "Select-Network": "Select Network",
+  "Select-Network": "Active Network",
   "InsurAce-Title": "InsurAce Vault Insurance",
   "InsurAce-Sections": [
     {

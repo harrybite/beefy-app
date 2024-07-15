@@ -80,7 +80,7 @@ const PoolSummary = ({
     [toggleCard]
   );
 
-  console.log('Pools', pool);
+  //
 
   return (
     <AccordionSummary
