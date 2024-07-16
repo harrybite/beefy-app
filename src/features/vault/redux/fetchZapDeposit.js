@@ -16,6 +16,7 @@ export function fetchZapDeposit({
   tokenAmount,
   zapAddress,
   swapAmountOutMin,
+  poolID,
 }) {
   const index = vaultAddress;
 
@@ -35,6 +36,7 @@ export function fetchZapDeposit({
         tokenAmount,
         zapAddress,
         swapAmountOutMin,
+        poolID,
         dispatch,
       })
         .then(data => {

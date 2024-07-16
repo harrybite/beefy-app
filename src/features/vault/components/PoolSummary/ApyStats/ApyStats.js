@@ -177,7 +177,7 @@ const ApyStats = ({
     <>
       <Grid item xs={4} className={itemClasses}>
         <LabeledStatWithTooltip
-          value={singleapy}
+          value={`%${Number(singleapy) * 100}`}
           label={t('Vault-APY')}
           tooltip={
             !isLoading && needsApyTooltip ? <YearlyBreakdownTooltip rates={formatted} /> : null

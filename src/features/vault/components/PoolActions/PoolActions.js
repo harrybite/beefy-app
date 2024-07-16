@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PoolActions = ({ pool, balanceSingle, index, sharesBalance }) => {
+  // console.log("shareBlance", sharesBalance)
   const classes = useStyles();
 
   return (

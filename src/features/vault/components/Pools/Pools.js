@@ -111,8 +111,8 @@ export default function Pools() {
           </span> */}
 
           <h4 className={classes.subtitle} style={{ marginTop: '16px' }}>
-            <AllInclusiveIcon className={classes.infinityIcon} />
-            {t('Vault-AutocompoundingNote')}
+            {/* <AllInclusiveIcon className={classes.infinityIcon} /> */}
+            {/* {t('Vault-AutocompoundingNote')} */}
           </h4>
         </div>
       </Grid>

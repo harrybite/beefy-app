@@ -7,7 +7,7 @@ import {
 } from './constants';
 import { deposit, depositBnb } from '../../web3';
 
-export function fetchDeposit({ address, web3, isAll, amount, contractAddress }) {
+export function fetchDeposit({ address, web3, isAll, amount, poolID, contractAddress }) {
   const index = contractAddress;
 
   return dispatch => {
@@ -17,7 +17,7 @@ export function fetchDeposit({ address, web3, isAll, amount, contractAddress }) 
     });
 
     const promise = new Promise((resolve, reject) => {
-      deposit({ web3, address, isAll, amount, contractAddress, dispatch })
+      deposit({ web3, address, isAll, amount, poolID, contractAddress, dispatch })
         .then(data => {
           dispatch({
             type: VAULT_FETCH_DEPOSIT_SUCCESS,
@@ -38,7 +38,7 @@ export function fetchDeposit({ address, web3, isAll, amount, contractAddress }) 
   };
 }
 
-export function fetchDepositBnb({ address, web3, amount, contractAddress, index }) {
+export function fetchDepositBnb({ address, web3, amount, poolID, contractAddress, index }) {
   return dispatch => {
     dispatch({
       type: VAULT_FETCH_DEPOSIT_BEGIN,
@@ -46,7 +46,7 @@ export function fetchDepositBnb({ address, web3, amount, contractAddress, index 
     });
 
     const promise = new Promise((resolve, reject) => {
-      depositBnb({ web3, address, amount, contractAddress, dispatch })
+      depositBnb({ web3, address, amount, poolID, contractAddress, dispatch })
         .then(data => {
           dispatch({
             type: VAULT_FETCH_DEPOSIT_SUCCESS,

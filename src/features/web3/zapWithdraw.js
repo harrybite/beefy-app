@@ -6,13 +6,14 @@ export const zapWithdraw = async ({
   address,
   vaultAddress,
   amount,
+  poolID,
   zapAddress,
   dispatch,
 }) => {
   console.log('beefOut(vaultAddress, amount)', vaultAddress, amount);
 
   const contract = new web3.eth.Contract(beefyUniV2ZapABI, zapAddress);
-  const transaction = contract.methods.beefOut(vaultAddress, amount).send({
+  const transaction = contract.methods.withdraw(poolID, amount).send({
     from: address,
   });
 
@@ -24,6 +25,7 @@ export const zapWithdrawAndSwap = async ({
   address,
   vaultAddress,
   amount,
+  poolID,
   zapAddress,
   tokenOut,
   amountOutMin,
@@ -34,15 +36,14 @@ export const zapWithdrawAndSwap = async ({
     vaultAddress,
     amount,
     tokenOut,
-    amountOutMin
+    amountOutMin,
+    poolID
   );
 
   const contract = new web3.eth.Contract(beefyUniV2ZapABI, zapAddress);
-  const transaction = contract.methods
-    .beefOutAndSwap(vaultAddress, amount, tokenOut, amountOutMin)
-    .send({
-      from: address,
-    });
+  const transaction = contract.methods.withdraw(poolID, amount).send({
+    from: address,
+  });
 
   return promisifyTransaction(transaction, dispatch);
 };

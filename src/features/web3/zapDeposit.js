@@ -10,6 +10,7 @@ export const zapDeposit = async ({
   tokenAmount,
   zapAddress,
   swapAmountOutMin,
+  poolID,
   dispatch,
 }) => {
   const contract = new web3.eth.Contract(beefyUniV2ZapABI, zapAddress);
@@ -21,6 +22,7 @@ export const zapDeposit = async ({
     tokenAddress,
     tokenAmount,
     swapAmountOutMin,
+    poolID,
     dispatch,
   });
   return data;
@@ -34,15 +36,20 @@ const _zapDeposit = ({
   tokenAddress,
   tokenAmount,
   swapAmountOutMin,
+  poolID,
   dispatch,
 }) => {
   let transaction;
 
   if (isETH) {
-    console.log('beefInETH(vaultAddress, swapAmountOutMin)', vaultAddress, swapAmountOutMin);
-    transaction = contract.methods.beefInETH(vaultAddress, swapAmountOutMin).send({
+    console.log(
+      'beefInETH(vaultAddress, swapAmountOutMin)',
+      vaultAddress,
+      swapAmountOutMin,
+      poolID
+    );
+    transaction = contract.methods.Deposit(poolID, tokenAmount).send({
       from: address,
-      value: tokenAmount,
     });
   } else {
     console.log(
@@ -50,13 +57,12 @@ const _zapDeposit = ({
       vaultAddress,
       swapAmountOutMin,
       tokenAddress,
-      tokenAmount
+      tokenAmount,
+      poolID
     );
-    transaction = contract.methods
-      .beefIn(vaultAddress, swapAmountOutMin, tokenAddress, tokenAmount)
-      .send({
-        from: address,
-      });
+    transaction = contract.methods.Deposit(poolID, tokenAmount).send({
+      from: address,
+    });
   }
 
   return new Promise((resolve, reject) => {

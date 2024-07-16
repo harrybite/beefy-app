@@ -67,7 +67,7 @@ export default function App({ children }) {
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
           <ScrollToTop />
-          <div className={classes.page}>
+          <div className={classes.page} style={{ backgroundColor: 'black' }}>
             <Header
               links={
                 <HeaderLinks

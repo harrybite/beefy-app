@@ -240,9 +240,11 @@ const DepositSection = ({ pool }) => {
         tokenAmount: convertAmountToRawNumber(deposit.amount, deposit.token.decimals),
         zapAddress: deposit.depositAddress,
         swapAmountOutMin: swapAmountOutMin.toFixed(0),
+        poolID: pool.index,
         address,
         web3,
       };
+      console.log('Zap, ', zapDepositArgs);
       fetchZapDeposit(zapDepositArgs)
         .then(() => {
           enqueueSnackbar(t('Vault-DepositSuccess'), { variant: 'success' });
@@ -251,11 +253,13 @@ const DepositSection = ({ pool }) => {
         .catch(error => enqueueSnackbar(t('Vault-DepositError', { error }), { variant: 'error' }));
     } else {
       // Vault deposit
+
       const depositArgs = {
         address,
         web3,
         isAll: !!deposit.isAll,
         amount: convertAmountToRawNumber(deposit.amount, deposit.token.decimals),
+        poolID: pool.index,
         contractAddress: deposit.vaultAddress,
       };
       if (pool.tokenAddress) {
@@ -268,6 +272,7 @@ const DepositSection = ({ pool }) => {
             enqueueSnackbar(t('Vault-DepositError', { error }), { variant: 'error' })
           );
       } else {
+        console.log('Vault deposit ', depositArgs);
         fetchDepositBnb(depositArgs)
           .then(() => {
             enqueueSnackbar(t('Vault-DepositSuccess'), { variant: 'success' });
@@ -384,13 +389,13 @@ const DepositSection = ({ pool }) => {
               <Button
                 className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
                 color="primary"
-                disabled={
-                  pool.depositsPaused ||
-                  fetchZapEstimatePending[pool.earnContractAddress] ||
-                  fetchDepositPending[pool.earnContractAddress] ||
-                  depositSettings.amount.isZero() ||
-                  tokenBalance(depositSettings.token.symbol).isZero()
-                }
+                // disabled={
+                //   pool.depositsPaused ||
+                //   fetchZapEstimatePending[pool.earnContractAddress] ||
+                //   fetchDepositPending[pool.earnContractAddress] ||
+                //   depositSettings.amount.isZero() ||
+                //   tokenBalance(depositSettings.token.symbol).isZero()
+                // }
                 onClick={handleDepositAmount}
               >
                 {t('Vault-DepositButton')}
@@ -398,11 +403,11 @@ const DepositSection = ({ pool }) => {
               {Boolean(pool.tokenAddress) && Boolean(!depositSettings.isZap) && (
                 <Button
                   className={`${classes.showDetailButton} ${classes.showDetailButtonContained}`}
-                  disabled={
-                    pool.depositsPaused ||
-                    fetchDepositPending[pool.earnContractAddress] ||
-                    tokenBalance(depositSettings.token.symbol).isZero()
-                  }
+                  // disabled={
+                  //   pool.depositsPaused ||
+                  //   fetchDepositPending[pool.earnContractAddress] ||
+                  //   tokenBalance(depositSettings.token.symbol).isZero()
+                  // }
                   onClick={handleDepositAll}
                 >
                   {t('Vault-DepositButtonAll')}

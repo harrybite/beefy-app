@@ -7,7 +7,7 @@ import {
 } from './constants';
 import { withdraw, withdrawBnb, zapWithdraw, zapWithdrawAndSwap } from '../../web3';
 
-export function fetchWithdraw({ address, web3, isAll, amount, contractAddress, index }) {
+export function fetchWithdraw({ address, web3, isAll, amount, poolID, contractAddress, index }) {
   return dispatch => {
     dispatch({
       type: VAULT_FETCH_WITHDRAW_BEGIN,
@@ -15,7 +15,7 @@ export function fetchWithdraw({ address, web3, isAll, amount, contractAddress, i
     });
 
     const promise = new Promise((resolve, reject) => {
-      withdraw({ web3, address, isAll, amount, contractAddress, dispatch })
+      withdraw({ web3, address, isAll, amount, poolID, contractAddress, dispatch })
         .then(data => {
           dispatch({
             type: VAULT_FETCH_WITHDRAW_SUCCESS,
@@ -36,7 +36,7 @@ export function fetchWithdraw({ address, web3, isAll, amount, contractAddress, i
   };
 }
 
-export function fetchWithdrawBnb({ address, web3, isAll, amount, contractAddress, index }) {
+export function fetchWithdrawBnb({ address, web3, isAll, amount, poolID, contractAddress, index }) {
   return dispatch => {
     dispatch({
       type: VAULT_FETCH_WITHDRAW_BEGIN,
@@ -44,7 +44,7 @@ export function fetchWithdrawBnb({ address, web3, isAll, amount, contractAddress
     });
 
     const promise = new Promise((resolve, reject) => {
-      withdrawBnb({ web3, address, isAll, amount, contractAddress, dispatch })
+      withdrawBnb({ web3, address, isAll, amount, poolID, contractAddress, dispatch })
         .then(data => {
           dispatch({
             type: VAULT_FETCH_WITHDRAW_SUCCESS,
@@ -70,6 +70,7 @@ export function fetchZapWithdrawAndRemoveLiquidity({
   web3,
   vaultAddress,
   amount,
+  poolID,
   zapAddress,
 }) {
   const index = vaultAddress;
@@ -81,7 +82,7 @@ export function fetchZapWithdrawAndRemoveLiquidity({
     });
 
     const promise = new Promise((resolve, reject) => {
-      zapWithdraw({ web3, address, vaultAddress, amount, zapAddress, dispatch })
+      zapWithdraw({ web3, address, vaultAddress, amount, poolID, zapAddress, dispatch })
         .then(data => {
           dispatch({
             type: VAULT_FETCH_WITHDRAW_SUCCESS,
@@ -107,6 +108,7 @@ export function fetchZapWithdrawAndSwap({
   web3,
   vaultAddress,
   amount,
+  poolID,
   zapAddress,
   tokenOut,
   amountOutMin,
@@ -125,6 +127,7 @@ export function fetchZapWithdrawAndSwap({
         address,
         vaultAddress,
         amount,
+        poolID,
         zapAddress,
         tokenOut,
         amountOutMin,

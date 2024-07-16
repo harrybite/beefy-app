@@ -12,6 +12,7 @@ import {
   transition,
   warningColor,
   whiteColor,
+  blueColor,
 } from 'assets/jss/material-kit-pro-react.js';
 
 const styles = theme => ({
@@ -24,7 +25,7 @@ const styles = theme => ({
     color: grayColor[15],
     width: 'calc(100% - 20px)',
     margin: '0 auto',
-    backgroundColor: whiteColor,
+    backgroundColor: blueColor,
     boxShadow:
       '0 4px 18px 0px rgba(' +
       hexToRgb(blackColor) +

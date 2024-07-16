@@ -19,6 +19,7 @@ import {
   byDecimals,
   convertAmountToRawNumber,
   convertAmountFromRawNumber,
+  isZero,
 } from 'features/helpers/bignumber';
 import { shouldHideFromHarvest } from 'features/helpers/utils';
 import {
@@ -31,13 +32,16 @@ import { useConnectWallet } from 'features/home/redux/hooks';
 import { getNetworkCoin } from 'features/helpers/getNetworkData';
 import styles from './styles';
 import { RewardClaim } from '../ClaimReward/Claimreward';
+import { userReward } from '../../Materchef/connection';
 
 const useStyles = makeStyles(styles);
 const nativeCoin = getNetworkCoin();
 
 const WithdrawSection = ({ pool, index, sharesBalance }) => {
+  // const sharesBalance = new BigNumber(1)
   const { t, i18n } = useTranslation();
   const classes = useStyles();
+  const [reward, setReward] = useState(0);
   const { web3, address } = useConnectWallet();
   const { enqueueSnackbar } = useSnackbar();
   const { fetchApproval, fetchApprovalPending } = useFetchApproval();
@@ -208,6 +212,11 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
       ...prevState,
       isNeedApproval: prevState.isZap && allowance.isZero(),
     }));
+    const init = async () => {
+      const rewd = await userReward(pool.index, address);
+      setReward(rewd);
+    };
+    init();
   }, [pool.earnedToken, tokens, withdrawSettings.withdrawAddress]);
 
   const handleApproval = () => {
@@ -269,10 +278,12 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
           web3,
           vaultAddress: pool.earnContractAddress,
           amount: sharesAmount,
+          poolID: pool.index,
           zapAddress: pool.zap.zapAddress,
           tokenOut: withdrawSettings.swapOutput.address,
           amountOutMin: swapAmountOutMin.toFixed(0),
         };
+        console.log('1 ', pool.index);
         fetchZapWithdrawAndSwap(zapWithdrawArgs)
           .then(() => {
             enqueueSnackbar(t('Vault-WithdrawSuccess'), { variant: 'success' });
@@ -287,8 +298,10 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
           web3,
           vaultAddress: pool.earnContractAddress,
           amount: sharesAmount,
+          poolID: pool.index,
           zapAddress: pool.zap.zapAddress,
         };
+        console.log('2 ', pool.index);
         fetchZapWithdrawAndRemoveLiquidity(zapWithdrawArgs)
           .then(() => {
             enqueueSnackbar(t('Vault-WithdrawSuccess'), { variant: 'success' });
@@ -304,10 +317,12 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
         web3,
         isAll,
         amount: sharesAmount,
+        poolID: pool.index,
         contractAddress: pool.earnContractAddress,
         index,
       };
       if (pool.tokenAddress) {
+        console.log('3 ', pool.index);
         fetchWithdraw(vaultWithdrawArgs)
           .then(() => {
             enqueueSnackbar(t('Vault-WithdrawSuccess'), { variant: 'success' });
@@ -317,6 +332,7 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
             enqueueSnackbar(t('Vault-WithdrawError', { error }), { variant: 'error' })
           );
       } else {
+        console.log('4 ', pool.index);
         fetchWithdrawBnb(vaultWithdrawArgs)
           .then(() => {
             enqueueSnackbar(t('Vault-WithdrawSuccess'), { variant: 'success' });
@@ -418,10 +434,10 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                       className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
                       type="button"
                       color="primary"
-                      disabled={
-                        withdrawSettings.amount.isZero() ||
-                        fetchZapEstimatePending[pool.tokenAddress]
-                      }
+                      // disabled={
+                      //   withdrawSettings.amount.isZero() ||
+                      //   fetchZapEstimatePending[pool.tokenAddress]
+                      // }
                       onClick={handleWithdraw}
                     >
                       {fetchWithdrawPending[index]
@@ -434,7 +450,7 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                         className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
                         type="button"
                         color="primary"
-                        disabled={sharesBalance.isZero()}
+                        // disabled={sharesBalance.isZero()}
                         onClick={handleWithdrawAll}
                       >
                         {fetchWithdrawPending[index]
@@ -442,6 +458,14 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                           : `${t('Vault-WithdrawButtonAll')}`}
                       </Button>
                     )}
+                    <Button
+                      className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
+                      type="button"
+                      color="primary"
+                      disabled={true}
+                    >
+                      Reward: {reward}
+                    </Button>
 
                     <Button
                       className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
@@ -449,7 +473,8 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                       color="primary"
                       disabled={
                         withdrawSettings.amount.isZero() ||
-                        fetchZapEstimatePending[pool.tokenAddress]
+                        fetchZapEstimatePending[pool.tokenAddress] ||
+                        isZero(reward)
                       }
                       onClick={() => handleClaimReward()}
                     >

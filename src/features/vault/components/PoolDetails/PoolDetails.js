@@ -38,11 +38,13 @@ const formatDecimals = number => {
 };
 
 const PoolDetails = ({ vaultId }) => {
+  console.log('Running');
   const classes = useStyles();
   const { t } = useTranslation();
   const { web3, address } = useConnectWallet();
   const { pools, fetchVaultsData, fetchVaultsDataDone } = useFetchVaultsData();
   const { tokens, fetchBalances, fetchBalancesDone } = useFetchBalances();
+
   const { apys, fetchApys, fetchApysDone } = useFetchApys();
   const pool = pools.find(p => p.id === vaultId);
   const { getPageMeta } = usePageMeta();
@@ -52,6 +54,7 @@ const PoolDetails = ({ vaultId }) => {
   const launchpool = launchpoolId ? launchpools[launchpoolId] : null;
   const launchpoolApr = usePoolApr(launchpoolId);
   const multipleLaunchpools = activeLaunchpools.length > 1;
+  console.log('Balance bignumber', tokens[pool.earnedToken].tokenBalance);
 
   useEffect(() => {
     const unsubscribes = activeLaunchpools.map(launchpoolId =>
@@ -113,6 +116,7 @@ const PoolDetails = ({ vaultId }) => {
   }, [pool, launchpool, t]);
 
   const balanceSingle = byDecimals(tokens[pool.token].tokenBalance, pool.tokenDecimals);
+
   const sharesBalance = new BigNumber(tokens[pool.earnedToken].tokenBalance);
   const apy = apys[pool.id] || { totalApy: 0 };
 

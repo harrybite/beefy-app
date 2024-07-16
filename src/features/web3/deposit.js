@@ -1,17 +1,26 @@
 import { vaultABI } from '../configure';
 import { enqueueSnackbar } from '../common/redux/actions';
 
-export const deposit = async ({ web3, address, isAll, amount, contractAddress, dispatch }) => {
+export const deposit = async ({
+  web3,
+  address,
+  isAll,
+  amount,
+  poolID,
+  contractAddress,
+  dispatch,
+}) => {
   const contract = new web3.eth.Contract(vaultABI, contractAddress);
-  const data = await _deposit({ web3, contract, isAll, amount, address, dispatch });
+  const data = await _deposit({ web3, contract, isAll, amount, poolID, address, dispatch });
   return data;
 };
 
-const _deposit = ({ web3, contract, amount, isAll, address, dispatch }) => {
+const _deposit = ({ web3, contract, amount, isAll, poolID, address, dispatch }) => {
   return new Promise((resolve, reject) => {
     if (isAll) {
+      console.log('Vault deposit tokenAddress ALL', poolID);
       contract.methods
-        .depositAll()
+        .depositAll(poolID)
         .send({ from: address })
         .on('transactionHash', function (hash) {
           dispatch(
@@ -35,8 +44,9 @@ const _deposit = ({ web3, contract, amount, isAll, address, dispatch }) => {
           reject(error);
         });
     } else {
+      console.log('Vault deposit tokenAddress ALLNot', poolID);
       contract.methods
-        .deposit(amount)
+        .deposit(poolID, amount)
         .send({ from: address })
         .on('transactionHash', function (hash) {
           console.log(hash);

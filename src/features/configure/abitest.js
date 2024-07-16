@@ -1,6 +1,4 @@
-export const materchef = '0x708033e77e4c7015F7552cBD776744aB96Cd20F5';
-
-export const materchefabi = [
+const ab = [
   {
     inputs: [
       { internalType: 'address', name: '_treasury', type: 'address' },

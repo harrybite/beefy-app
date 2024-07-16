@@ -66,6 +66,7 @@ const grayColor = [
   '#505050',
   '#1f1f1f',
 ];
+const blueColor = '#2a23ff';
 const whiteColor = '#FFF';
 const blackColor = '#000';
 const twitterColor = '#55acee';
@@ -174,6 +175,7 @@ export {
   roseColor,
   grayColor,
   whiteColor,
+  blueColor,
   blackColor,
   twitterColor,
   facebookColor,

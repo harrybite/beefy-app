@@ -28,8 +28,13 @@ body {
   }
 }
 
+.jss{
+  background-color: black;
+}
+
 @media (max-width: 767px) {
   .hidden-xs {
     display: none !important;
   }
 }
+

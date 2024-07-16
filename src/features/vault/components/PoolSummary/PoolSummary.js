@@ -22,6 +22,7 @@ const PoolSummary = ({
   pool,
   launchpool,
   tvl,
+  userValueLocked,
   singleapy,
   toggleCard,
   balanceSingle,
@@ -125,7 +126,7 @@ const PoolSummary = ({
         </Grid>
         <Grid item xs={6} className={`${classes.item} ${classes.itemBalances}`}>
           <LabeledStat
-            value={formatDecimals(deposited)}
+            value={Number(userValueLocked).toFixed(6)}
             // subvalue={depositedUsd}
             label={t('Vault-Deposited')}
             isLoading={!fetchBalancesDone}
@@ -142,7 +143,7 @@ const PoolSummary = ({
         />
         <Grid item xs={5} className={`${classes.item} ${classes.itemStats}`}>
           <LabeledStat
-            value={tvl}
+            value={Number(tvl).toFixed(3)}
             label={t('Vault-TVL')}
             isLoading={!fetchVaultsDataDone}
             className={classes.itemInner}
