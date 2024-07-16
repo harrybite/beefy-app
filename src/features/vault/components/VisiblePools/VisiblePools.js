@@ -38,7 +38,6 @@ const VisiblePools = ({
   const { poolsByAsset, asset, setAsset } = usePoolsByAsset(poolsByVaultType);
   const { sortedPools, order, setOrder } = useSortedPools(poolsByAsset, apys, tokens);
   const { visiblePools, fetchVisiblePools } = useVisiblePools(sortedPools, 10);
-  console.log('visiblePools ', visiblePools);
 
   useLaunchpoolUpdates();
 

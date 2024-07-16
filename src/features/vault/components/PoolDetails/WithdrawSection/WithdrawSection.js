@@ -30,6 +30,7 @@ import {
 import { useConnectWallet } from 'features/home/redux/hooks';
 import { getNetworkCoin } from 'features/helpers/getNetworkData';
 import styles from './styles';
+import { RewardClaim } from '../ClaimReward/Claimreward';
 
 const useStyles = makeStyles(styles);
 const nativeCoin = getNetworkCoin();
@@ -221,6 +222,20 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
       .catch(error => enqueueSnackbar(t('Vault-ApprovalError', { error }), { variant: 'error' }));
   };
 
+  const handleClaimReward = async () => {
+    try {
+      RewardClaim(web3, pool.earnedTokenAddress, address)
+        .then(() => {
+          enqueueSnackbar(t('Vault-ClaimSuccess'), { variant: 'success' });
+        })
+        .catch(error => {
+          enqueueSnackbar(t('Vault-ClaimError'), { variant: 'error' });
+        });
+    } catch (error) {
+      enqueueSnackbar(t('Vault-ClaimError', { error }), { variant: 'error' });
+    }
+  };
+
   const handleWithdraw = () => {
     const sharesAmount = withdrawSettings.amount
       .dividedBy(pool.pricePerFullShare)
@@ -387,7 +402,10 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                 </Button>
               </div>
             ) : (
-              <div className={classes.showDetailButtonCon}>
+              <div
+                className={classes.showDetailButtonCon}
+                style={{ display: 'flex', flexWrap: 'wrap' }}
+              >
                 {pool.id === 'scream-tusd' ? (
                   <div className={classes.showPausedMsg}>
                     {t(
@@ -410,6 +428,7 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                         ? `${t('Vault-Withdrawing')}`
                         : `${t('Vault-WithdrawButton')}`}
                     </Button>
+
                     {!withdrawSettings.isSwap && (
                       <Button
                         className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
@@ -423,6 +442,19 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                           : `${t('Vault-WithdrawButtonAll')}`}
                       </Button>
                     )}
+
+                    <Button
+                      className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
+                      type="button"
+                      color="primary"
+                      disabled={
+                        withdrawSettings.amount.isZero() ||
+                        fetchZapEstimatePending[pool.tokenAddress]
+                      }
+                      onClick={() => handleClaimReward()}
+                    >
+                      Claim Reward
+                    </Button>
                   </>
                 )}
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
@@ -14,6 +14,7 @@ import { usePoolsTvl, useUserTvl } from '../../hooks/usePoolsTvl';
 import { formatGlobalTvl } from 'features/helpers/format';
 import { useFetchBifibuyback } from 'features/vault/redux/fetchBifiBuyback';
 import { getNetworkFriendlyName } from '../../../helpers/getNetworkData';
+import { totaltvl } from '../Materchef/connection';
 
 const FETCH_INTERVAL_MS = 15 * 1000;
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles(styles);
 
 export default function Pools() {
   const { t } = useTranslation();
+  const [totalTVL, setTotalTVL] = useState(0);
   const { web3, address } = useConnectWallet();
   const { pools, fetchVaultsData, fetchVaultsDataPending, fetchVaultsDataDone } =
     useFetchVaultsData();
@@ -44,13 +46,15 @@ export default function Pools() {
   }, [fetchBifibuyback]);
 
   useEffect(() => {
-    const fetch = () => {
+    const fetch = async () => {
       if (address && web3 && !fetchBalancesPending) {
         fetchBalances({ address, web3, tokens });
       }
       if (!fetchVaultsDataPending) {
         fetchVaultsData({ web3, pools });
       }
+      const totalTVLs = await totaltvl();
+      setTotalTVL(totalTVLs);
     };
     fetch();
 
@@ -69,12 +73,8 @@ export default function Pools() {
 
   const activePoolCount = pools.filter(pool => pool.status === 'active').length;
 
-  console.log('Pools', pools);
-
-  console.log('TVL ', fetchVaultsDataDone, poolsTvl);
-
   return (
-    <Grid container className={classes.container}>
+    <Grid container className={classes.container} justifyContent="space-evenly">
       <Grid item xs={6}>
         <h1 className={classes.title}>{t('Vault-Network')}</h1>
         <NetworksToggle />
@@ -84,15 +84,15 @@ export default function Pools() {
           </>
         )}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} style={{ alignSelf: 'end' }}>
         <div className={classes.tvl}>
           <span className={classes.title}>
-            TVL{' '}
-            {fetchVaultsDataDone ? (
+            TVL {Number(totalTVL).toFixed(3)}
+            {/* {fetchVaultsDataDone ? (
               formatGlobalTvl(poolsTvl)
             ) : (
               <TVLLoader className={classes.titleLoader} />
-            )}
+            )} */}
           </span>
 
           {fetchBifibuybackDone && chainBifibuyback && (
@@ -101,14 +101,14 @@ export default function Pools() {
             </span>
           )}
 
-          <span className={classes.text}>
+          {/* <span className={classes.text}>
             {t('Vault-Deposited')}{' '}
             {fetchVaultsDataDone && fetchBalancesDone ? (
               formatGlobalTvl(userTvl)
             ) : (
               <TVLLoader className={classes.titleLoader} />
             )}
-          </span>
+          </span> */}
 
           <h4 className={classes.subtitle} style={{ marginTop: '16px' }}>
             <AllInclusiveIcon className={classes.infinityIcon} />

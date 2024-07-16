@@ -120,7 +120,14 @@ const LabeledStatWithTooltip = memo(({ tooltip, label, ...passthrough }) => {
   );
 });
 
-const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInnerClasses }) => {
+const ApyStats = ({
+  apy,
+  singleapy,
+  launchpoolApr,
+  isLoading = false,
+  itemClasses,
+  itemInnerClasses,
+}) => {
   const { t } = useTranslation();
   const isBoosted = !!launchpoolApr;
   const values = {};
@@ -170,7 +177,7 @@ const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInne
     <>
       <Grid item xs={4} className={itemClasses}>
         <LabeledStatWithTooltip
-          value={formatted.totalApy}
+          value={singleapy}
           label={t('Vault-APY')}
           tooltip={
             !isLoading && needsApyTooltip ? <YearlyBreakdownTooltip rates={formatted} /> : null
@@ -180,7 +187,7 @@ const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInne
           className={`tooltip-toggle ${itemInnerClasses}`}
         />
       </Grid>
-      <Grid item xs={4} className={itemClasses}>
+      {/* <Grid item xs={4} className={itemClasses}>
         <LabeledStatWithTooltip
           value={formatted.totalDaily}
           label={t('Vault-APYDaily')}
@@ -191,7 +198,7 @@ const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInne
           isLoading={isLoading}
           className={`tooltip-toggle ${itemInnerClasses}`}
         />
-      </Grid>
+      </Grid> */}
     </>
   );
 };

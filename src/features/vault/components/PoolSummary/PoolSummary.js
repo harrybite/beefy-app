@@ -21,6 +21,8 @@ const useStyles = makeStyles(styles);
 const PoolSummary = ({
   pool,
   launchpool,
+  tvl,
+  singleapy,
   toggleCard,
   balanceSingle,
   sharesBalance,
@@ -91,10 +93,10 @@ const PoolSummary = ({
           ? classes.detailsPaused
           : classes.details
       }
-      style={{ justifyContent: 'space-between' }}
+      style={{ justifyContent: 'center' }}
       onClick={onSummaryClick}
     >
-      <Grid container alignItems="center" style={{ paddingTop: '20px' }}>
+      <Grid container alignItems="center" style={{ paddingTop: '20px' }} justifyContent="center">
         {vaultStateTitle}
         <PoolBoosts poolName={pool.name} earnedTokenAddress={pool.earnedTokenAddress} />
         <Grid item xs={12} className={`${classes.item} ${classes.itemTitle}`}>
@@ -115,7 +117,7 @@ const PoolSummary = ({
         <Grid item xs={6} className={`${classes.item} ${classes.itemBalances}`}>
           <LabeledStat
             value={formatDecimals(balanceSingle)}
-            subvalue={balanceUsd}
+            // subvalue={balanceUsd}
             label={t('Vault-Wallet')}
             isLoading={!fetchBalancesDone}
             className={classes.itemInner}
@@ -124,7 +126,7 @@ const PoolSummary = ({
         <Grid item xs={6} className={`${classes.item} ${classes.itemBalances}`}>
           <LabeledStat
             value={formatDecimals(deposited)}
-            subvalue={depositedUsd}
+            // subvalue={depositedUsd}
             label={t('Vault-Deposited')}
             isLoading={!fetchBalancesDone}
             className={classes.itemInner}
@@ -132,18 +134,15 @@ const PoolSummary = ({
         </Grid>
         <ApyStats
           apy={apy}
+          singleapy={singleapy}
           launchpoolApr={launchpoolApr}
           isLoading={!fetchApysDone}
           itemClasses={`${classes.item} ${classes.itemStats}`}
           itemInnerClasses={classes.itemInner}
         />
-        <Grid item xs={4} className={`${classes.item} ${classes.itemStats}`}>
+        <Grid item xs={5} className={`${classes.item} ${classes.itemStats}`}>
           <LabeledStat
-            value={
-              isNaN(pool.tvl)
-                ? formatTvl(0, pool.oraclePrice)
-                : formatTvl(pool.tvl, pool.oraclePrice)
-            }
+            value={tvl}
             label={t('Vault-TVL')}
             isLoading={!fetchVaultsDataDone}
             className={classes.itemInner}
@@ -155,7 +154,7 @@ const PoolSummary = ({
 };
 
 const formatDecimals = number => {
-  return number >= 10 ? number.toFixed(4) : number.isEqualTo(0) ? 0 : number.toFixed(8);
+  return number >= 10 ? number.toFixed(4) : number.isEqualTo(0) ? 0 : number.toFixed(6);
 };
 
 export default PoolSummary;
