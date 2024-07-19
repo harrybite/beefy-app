@@ -2,6 +2,7 @@ export const bscPools = [
   {
     id: 'babygrok-wbnb',
     index: 0,
+    multiplayby: 1,
     name: 'BABYGROK-BNB LP',
     token: 'BABYGROK-BNB LP',
     logo: 'bnb-pairs/BABYGROK-BNB.png',
@@ -39,6 +40,7 @@ export const bscPools = [
   {
     id: 'babygrok-usdt',
     index: 1,
+    multiplayby: 1,
     name: 'BABYGROK-USDT LP',
     token: 'BABYGROK-USDT LP',
     logo: 'bnb-pairs/BABYGROK-USDT.png',
@@ -76,6 +78,7 @@ export const bscPools = [
   {
     id: 'grokcat-wbnb',
     index: 2,
+    multiplayby: 100000,
     name: 'GROKCAT-BNB LP',
     token: 'GROKCAT-BNB LP',
     logo: 'bnb-pairs/GROKCAT-BNB.png',
@@ -113,6 +116,7 @@ export const bscPools = [
   {
     id: 'grokcat-usdt',
     index: 3,
+    multiplayby: 100000,
     name: 'GROKCAT-USDT LP',
     token: 'GROKCAT-USDT LP',
     logo: 'bnb-pairs/GROKCAT-USDT.png',

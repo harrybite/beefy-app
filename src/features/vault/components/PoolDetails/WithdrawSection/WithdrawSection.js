@@ -32,7 +32,8 @@ import { useConnectWallet } from 'features/home/redux/hooks';
 import { getNetworkCoin } from 'features/helpers/getNetworkData';
 import styles from './styles';
 import { RewardClaim } from '../ClaimReward/Claimreward';
-import { userReward } from '../../Materchef/connection';
+import { userPoolInfo, userReward } from '../../Materchef/connection';
+import Countdown from 'react-countdown';
 
 const useStyles = makeStyles(styles);
 const nativeCoin = getNetworkCoin();
@@ -42,6 +43,7 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
   const { t, i18n } = useTranslation();
   const classes = useStyles();
   const [reward, setReward] = useState(0);
+  const [userpoolinfo, setUserPoolInfo] = useState(1721282429);
   const { web3, address } = useConnectWallet();
   const { enqueueSnackbar } = useSnackbar();
   const { fetchApproval, fetchApprovalPending } = useFetchApproval();
@@ -205,6 +207,18 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
   };
 
   useEffect(() => {
+    const init = async () => {
+      const rewd = await userReward(pool.index, address);
+      setReward(rewd);
+
+      const userInfo = await userPoolInfo(pool.index, address);
+
+      setUserPoolInfo(userInfo.depositTimestamp);
+    };
+    init();
+  }, [address, pool.index]);
+
+  useEffect(() => {
     const allowance = new BigNumber(
       tokens[pool.earnedToken].allowance[withdrawSettings.withdrawAddress]
     );
@@ -212,11 +226,6 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
       ...prevState,
       isNeedApproval: prevState.isZap && allowance.isZero(),
     }));
-    const init = async () => {
-      const rewd = await userReward(pool.index, address);
-      setReward(rewd);
-    };
-    init();
   }, [pool.earnedToken, tokens, withdrawSettings.withdrawAddress]);
 
   const handleApproval = () => {
@@ -233,7 +242,10 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
 
   const handleClaimReward = async () => {
     try {
-      RewardClaim(web3, pool.earnedTokenAddress, address)
+      if (Number(userpoolinfo) * 1000 + 2592000000 > new Date().getTime()) {
+        return;
+      }
+      RewardClaim(web3, pool.earnedTokenAddress, address, pool.index)
         .then(() => {
           enqueueSnackbar(t('Vault-ClaimSuccess'), { variant: 'success' });
         })
@@ -347,6 +359,8 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
 
   const withrawalNoticeKey = `Vault-Withdrawal-Platform-Notice-${pool.platform}`;
   const withdrawalNotice = !sharesBalance.isZero() && i18n.exists(withrawalNoticeKey);
+
+  console.log('Timer ', Number(userpoolinfo) * 1000 + 345600000);
 
   return (
     <Grid
@@ -463,22 +477,23 @@ const WithdrawSection = ({ pool, index, sharesBalance }) => {
                       type="button"
                       color="primary"
                       disabled={true}
+                      style={{ border: '1px solid #fff0' }}
                     >
-                      Reward: {reward}
+                      Reward: {Number(reward).toFixed(3)}
                     </Button>
 
                     <Button
                       className={`${classes.showDetailButton} ${classes.showDetailButtonOutlined}`}
                       type="button"
                       color="primary"
-                      disabled={
-                        withdrawSettings.amount.isZero() ||
-                        fetchZapEstimatePending[pool.tokenAddress] ||
-                        isZero(reward)
-                      }
+                      disabled={isZero(reward)}
                       onClick={() => handleClaimReward()}
                     >
-                      Claim Reward
+                      {Number(userpoolinfo) * 1000 + 2592000000 > new Date().getTime() ? (
+                        <Countdown date={Number(userpoolinfo) * 1000 + 2592000000} />
+                      ) : (
+                        'Claim Reward'
+                      )}
                     </Button>
                   </>
                 )}

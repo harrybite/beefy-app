@@ -135,6 +135,7 @@ const PoolSummary = ({
         </Grid>
         <ApyStats
           apy={apy}
+          multi={pool.multiplayby}
           singleapy={singleapy}
           launchpoolApr={launchpoolApr}
           isLoading={!fetchApysDone}

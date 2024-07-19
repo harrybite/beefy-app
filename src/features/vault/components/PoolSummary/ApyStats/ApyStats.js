@@ -123,6 +123,7 @@ const LabeledStatWithTooltip = memo(({ tooltip, label, ...passthrough }) => {
 const ApyStats = ({
   apy,
   singleapy,
+  multi,
   launchpoolApr,
   isLoading = false,
   itemClasses,
@@ -177,7 +178,7 @@ const ApyStats = ({
     <>
       <Grid item xs={4} className={itemClasses}>
         <LabeledStatWithTooltip
-          value={`%${Number(singleapy) * 100}`}
+          value={`${(Number(singleapy) * 100).toFixed(0) * multi}%`}
           label={t('Vault-APY')}
           tooltip={
             !isLoading && needsApyTooltip ? <YearlyBreakdownTooltip rates={formatted} /> : null

@@ -57,7 +57,7 @@ export const userReward = async (id, address) => {
   try {
     const contract = await getContract();
     const tvl = await contract.methods.calculatePendingRewards(id, address).call();
-    return Number(tvl) / 10 ** 18;
+    return Number(tvl) / 10 ** 9;
   } catch (error) {
     // console.log('error', error);
   }
@@ -67,6 +67,17 @@ export const userValuePoolLockedWitDecimal = async (id, address) => {
   try {
     const contract = await getContract();
     const tvl = await contract.methods.userValueLocked(id, address).call();
+    return tvl;
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
+export const userPoolInfo = async (id, address) => {
+  try {
+    const contract = await getContract();
+    const tvl = await contract.methods.userInfo(id, address).call();
+    // console.log("userInfo ", tvl)
     return tvl;
   } catch (error) {
     console.log('error', error);
